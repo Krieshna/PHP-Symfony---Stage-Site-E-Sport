@@ -1,0 +1,63 @@
+{# Affichage des tournois #}     
+<div class="table-responsive">             
+    <table class="table table-bordered table-sm text-center"> 
+        <!-- Tableau - En-Tête -->
+        <thead  class="thead-dark"> 
+            <tr>                                    
+                <th scope="col">Date</th>
+                <th scope="col">Nom </th>
+                <th scope="col">Organisateur</th>
+            
+                <th scope="col">Saison</th>
+                <th scope="col">Ligue</th>
+                <th scope="col">Etat</th>
+            </tr>
+        </thead> 
+        <tbody>  
+            {% if var2 == 1 %}
+                {% for tournoi in variable  %}    
+          
+                    <tr>
+                        <th class="border-dark align-middle" scope=" row" > 
+                            {{tournoi.startDate |date("d/m/Y")}} 
+                            <br> 
+                            {{tournoi.endDate |date("d/m/Y")}}  
+                        </th>
+                        <td class="border-dark align-middle"> 
+                            <a href="{{path('tournament_show',{'slug' : tournoi.slug})}}"> {{tournoi.name}} </a>
+                        </td>
+                        <td class="border-dark align-middle"> 
+                            <a href="{{path('user_show',{'userName' : tournoi.creator.userName})}}"> {{tournoi.creator.userName}} </a>
+                        </td>
+                        <td class="border-dark align-middle"> {{tournoi.season.year}}  </td>
+                        <td class="border-dark align-middle"> {{tournoi.league.title}} </td>
+                        <td class="border-dark align-middle">{{tournoi.state.title}} </td>
+                    </tr>
+          
+                {% endfor %}
+            {% else %}
+                {% for partticipation in variable  %}    
+           
+                    <tr>
+                        <th class="border-dark align-middle" scope=" row" > 
+                            {{partticipation.tournament.startDate |date("d/m/Y")}} 
+                            <br> 
+                            {{partticipation.tournament.endDate |date("d/m/Y")}}  
+                        </th>
+                        <td class="border-dark align-middle"> 
+                            <a href="{{path('tournament_show',{'slug' : partticipation.tournament.slug})}}"> {{partticipation.tournament.name}} </a>
+                        </td>
+                        <td class="border-dark align-middle"> 
+                            <a href="{{path('user_show',{'userName' : partticipation.tournament.creator.userName})}}"> {{partticipation.tournament.creator.userName}} </a>
+                        </td>
+                        <td class="border-dark align-middle">{{partticipation.tournament.state.title}} </td>
+                        <td class="border-dark align-middle"> {{partticipation.tournament.season.year}}  </td>
+                        <td class="border-dark align-middle"> {{partticipation.tournament.league.title}} </td>
+                    </tr>
+
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</div> 
+                            

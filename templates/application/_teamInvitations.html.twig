@@ -1,0 +1,23 @@
+
+
+<table class="table ">
+
+    {% for invitation in var  %}
+        {% if invitation.isActive == 1 %}
+        {% if application == invitation.isApplication %}
+            <tr>
+                <td>{{invitation.invitedAt | date('d-m-y')}}</td>
+                <td>{{invitation.user.userName}}</td>
+                <td>
+                    {{invitation.message}}
+                </td>
+                <td> 
+                    <a href="{{path('team_application_accept',{'id':invitation.id})}}" class="btn btn-primary"><i class="fas fa-check"></i></a>
+                    <a href="{{path('team_application_refuse',{'id':invitation.id})}}" class="btn btn-danger"><i class="fas fa-times"></i></a>
+                </td>
+            </tr>
+     
+        {% endif %}
+        {% endif %}
+     {% endfor %}
+</table>

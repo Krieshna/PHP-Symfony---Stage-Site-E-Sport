@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guilde Agora|Teams{% endblock %}
+
+{% block video %}
+   {{ include('_partials/_banner-esport.html.twig') }}    
+{% endblock %}
+
+{% block body %}
+          
+<div class="container">  
+
+    <!--  Barre de recherche -->
+    <input class="form-control btn-outline-danger col-6 col-md-2 ml-auto my-auto" type="text" placeholder="Search" aria-label="Search">
+
+    <div class="row ">
+        <!-- Rappel du tittre la page -->
+        <h2 class="title">Teams</h2>
+
+        <!-- Lien ajout de contenu -->                        
+        <a href="{{path('team_new')}}"> <button class="badge badge-danger  my-auto ml-2 "> +</button> </a>                       
+
+        <!-- Filtres -->
+        <select class="form-control btn-outline-danger col-3 col-md-1 my-auto ml-auto mr-2 " name="saison" id="saison">            
+            <option value="2019">Saison</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+        </select>                    
+        <select class="form-control btn-outline-danger col-3 col-md-1 my-auto" name="ligue" id="ligue">>
+            <option value="Ligue">Ligue</option>
+            <option value="Casual">Casual</option>
+            <option value="Privé">Privé </option>
+            <option value="Officiel">Officiel</option>
+        </select>   
+    </div>
+
+    {# Affichage des équipes #}
+    <div class="row">
+        {% for team in teams |sort((a, b) => a.name <=> b.name) %}
+            {% include 'team/_team.html.twig' %}
+        {% endfor %}
+    </div>                        
+</div>
+
+{% endblock %}

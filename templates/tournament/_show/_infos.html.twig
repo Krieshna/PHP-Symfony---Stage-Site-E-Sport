@@ -1,0 +1,46 @@
+<div class="row  align-items-center lign-middle my-auto  mr-2  ml-auto">
+    <h3 class="author-name">Presentation du tournoi</h3>
+    {# Dropbar - Tournament Management #}
+    {% if app.user ==  tournoi.creator() %} 
+        <div class="navbar-nav justify-content-md-center ml-auto">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-cogs" aria-hidden="true"></i> Management
+            </button>
+            <div class="dropdown-menu bg-secondary text-light" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item bg-secondary text-light" href="{{path('tournament_edit',{'slug':tournoi.slug})}}"> 
+                    <i class="fa fa-cog" aria-hidden="true"></i> &nbsp; 
+                    Modifier les informations
+                </a>  
+                {% if tournoi.participants|length<16 %}      
+                    <a class="dropdown-item bg-secondary text-light" href="{{path('tournament_invitation',{'slug':tournoi.slug})}}">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; 
+                        Inviter une équipe
+                    </a>
+                {% endif %} 
+                {% if  tournoi.matchSet == false %}
+                    <a class="dropdown-item bg-secondary text-light" href="{{path('matchs_create',{'slug':tournoi.slug})}}">
+                        <i class="fas fa-folder-plus"></i> &nbsp; 
+                        Creer les rencontres
+                    </a>    
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{{tournoi.description | raw}}
+
+<!-- Résultat -->
+<h3 class="CardLatestNews__Heading">Resultat du challenge : </h3>  <strong>Pas encore connu </strong>
+                        
+<!-- BTN - Inscription -->
+<diV class="row">
+    {% if tournoi.state.title == 'Registering' %}
+        {% if tournoi.participants|length<16 %}        
+        <button class="btn btn-outline-danger col-12 col-md-2 mx-auto my-3">
+            <a href="{{path('tournament_application',{'slug':tournoi.slug})}}">S'inscrire </a> 
+        </button>
+        {% endif %}
+    {% endif %}
+</diV>
+

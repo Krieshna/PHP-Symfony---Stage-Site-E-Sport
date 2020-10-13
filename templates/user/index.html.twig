@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile de  {{user.userName}}!{% endblock %}
+
+{% block body %}
+<div class="container component bg-secondary py-0 mt-3">  
+    <div class="row align-items-center">
+        <div class="col-4 col-md-2 ">
+            <img src="{{user.picture}}" class="avatar my-3" alt="Avatar de {{user.userName}}">                    
+        </div> 
+
+        <div class="col-8 col-md-10 ">
+            <div class="row ">      
+                <h2>{{user.userName}}</h2> 
+                {% if user is same as (app.user)%}          
+                    <div class="navbar-nav ml-auto col-md-4 col-12">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cogs" aria-hidden="true"></i> Account Management
+                        </button>
+                        <div class="dropdown-menu bg-secondary text-light" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item text-light" href="{{path('account_profile')}}"> 
+                                Info
+                            </a>  
+                            <a class="dropdown-item text-light" href="{{path('account_password')}}">
+                                Password
+                            </a>
+                        </div>
+                    </div>       
+                {% endif %}   
+            </div>
+        </div>
+    </div>
+
+    <hr color="orange" style="height:2px">
+
+    <div class="px-2">
+        {{user.presentation | raw}}       
+    </div>
+
+    <ul class="nav nav-tabs"  id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link text-light bg-secondary" id="team-tab" data-toggle="tab" href="#team" role="tab" aria-controls="team" aria-selected="true">
+                <i class="fa fa-users" aria-hidden="true"></i>
+            </a>
+        </li>        
+        <li class="nav-item">
+            <a class="nav-link text-light bg-secondary" id="tournament-tab" data-toggle="tab" href="#tournament" role="tab" aria-controls="tournament" aria-selected="false">
+                 <i class="fa fa-tasks" aria-hidden="true"></i>
+            </a>
+        </li>        
+        <li class="nav-item ">
+            <a class="nav-link text-light bg-secondary" id="invitation-tab" data-toggle="tab" href="#invitation" role="tab" aria-controls="invitation" aria-selected="false">
+                   <i class="fa fa-envelope" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+
+    <hr color="orange" class="my-1" style="height:2px">
+
+    <div class=" tab-content" id="myTabContent">  
+        <!-- Tabulation - Team -->
+        <div class="tab-pane fade show active " id="team" role="tabpanel" aria-labelledby="team-tab">
+                <h2>Ses équipes</h2>                            
+                <div class="row">        
+                    {% for membership in user.memberships %}
+                            {% include 'team/_team.html.twig' with {'team':membership.team} %}
+                    {% endfor %}                                 
+                </div>                           
+        </div>
+        <!-- Tabulation - Tournament -->
+        <div class="tab-pane fade px-2" id="tournament" role="tabpanel" aria-labelledby="tournament-tab">
+            <h2>Ses tournois organisés</h2>
+             {% if user.TournamentCount() >= 1  %}
+                {% include 'tournament/_tournoi.html.twig' with  {'variable': user.tournaments, 'var2' : 1} %}    
+            {% endif %}
+        </div>
+        <!-- Tabulation - Invitation -->
+        <div class="tab-pane fade" id="invitation" role="tabpanel" aria-labelledby="invitation-tab">
+            <h2>Vos invitations</h2>
+                {% include 'application/_teamInvitations.html.twig' with  {'var': user.teamInvitations, 'application':0} %}            
+        </div>
+    </div>     
+    <hr color="orange" style="height:2px">     
+</div>
+{% endblock %}

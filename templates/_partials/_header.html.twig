@@ -1,0 +1,75 @@
+ <header class="site-header w-100">
+     <div class="container-fluid container--max-width">  
+        <nav class="navbar navbar-dark  nav--primary navbar-expand-lg text-center">
+                    
+            <a class="site-logo" href="/" title="Massive" rel="home">
+                <img src="/images/logo.png" class="site-logo__img" alt="Massive">
+            </a>      
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>  
+           
+            <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul id="menu-primary-menu" class="menu">
+                    <li >
+                        <a href="#">MCA Games</a>
+                    </li>
+                    <li >
+                        <a href="#">Projets</a>
+                    </li>
+                    <li >
+                        <a href="#">Communauté</a>
+                    </li>
+                    <li >
+                        <a href="{{path('news')}}">News</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            E-Sport
+                        </a>
+                        <div class="dropdown-menu site-header" aria-labelledby="navbarDropdownMenuLink">
+                            {# <a class="dropdown-item" href="{{path('esport_infos')}}">Informations</a> #}
+                            <a class="dropdown-item" href="{{path('team_index')}}">Teams</a>
+                            {# <a class="dropdown-item" href="schedule.html">Schedule</a> #}
+                            <a class="dropdown-item" href="{{path('tournament_index')}}">Tournament</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <ul id="menu-primary-menu" class="menu ml-auto">   
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a href="{{path('account_logout')}}" class="nav-link">Se déconnecter</a>
+                    </li>     
+                    <li class="nav-item">
+                        <a href="{{path('account_index')}}" class="nav-link">
+                            {{app.user.username}} 
+                            {% if app.user.InvitationCount() >= 1 %}     
+                                &nbsp; {{ app.user.InvitationCount()  }} 
+                                <i class="fa fa-fw fa-envelope"></i>                              
+                            {% endif %}
+                        </a>
+                    </li>  
+                {% else %}   
+                    <li class="nav-item">
+                        <a href="{{path('account_register')}}" class="nav-link">S'inscrire</a>
+                    </li>      
+                    <li class="nav-item">
+                        <a href="{{path('account_login')}}" class="nav-link">Se connecter</a>
+                    </li>                      
+                {% endif %}               
+            </ul>            
+        </nav>
+    </div>
+</header>
+
+{% for label, messages in app.flashes %}
+    <div class="container">
+        <div class="alert alert-{{label}}">
+            {% for message in messages %}   
+                <p>{{message}}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

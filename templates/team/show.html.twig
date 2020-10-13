@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guilde Agora|{{team.name}}{% endblock %}
+
+{% block video %}
+   {{ include('_partials/_banner-esport.html.twig') }}    
+{% endblock %}
+
+{% block body %}
+    <div class="container component py-0 bg-secondary">
+        <div class="row mt-4  ">
+            <!-- 1st column    -->
+            <div class="col-md-4 text-center ">
+                <img src="{{team.logo}}" class="" alt="{{team.name}} logo"/>
+            </div>
+            <!-- 2nd column    -->
+            <div class="col-md-8 text-justify">
+                <div class="row col-12 align-items-center" >
+                    <h3 > {{ team.name}} </h3>  &nbsp;  &nbsp; 
+                    <h5>            
+                        <i class="fas fa-chevron-left"></i>
+                        <span class="font-weight-bold">{{ team.tag | upper }}</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </h5>                   
+                </div>     
+                <h5>
+                    <span class="badge badge-pill badge-{% if team.recruitstatus == 1 %}success{% else %}danger{% endif %}">
+                        {% if team.recruitstatus %} 
+                            {% if  not team.isMember(app.user) %}
+                            <a href="{{path('team_application',{'slug':team.slug})}}" class="text-light">Postuler</a> 
+                            {% else %} Open {% endif %}
+                        {% else %}Closed{% endif %}
+                    </span>   
+                </h5> 
+
+                {{ team.description | raw }}
+
+            </div>       
+        </div>      
+   
+        <ul class="nav nav-tabs"  id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link text-light bg-secondary" id="member-tab" data-toggle="tab" href="#member" role="tab" aria-controls="member" aria-selected="true">
+                    <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                </a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link text-light bg-secondary" id="tournament-tab" data-toggle="tab" href="#tournament" role="tab" aria-controls="tournament" aria-selected="false">
+                    <i class="fa fa-tasks" aria-hidden="true"></i>
+                </a>
+            </li>     
+            <li class="nav-item">
+                <a class="nav-link text-light bg-secondary" id="match-tab" data-toggle="tab" href="#match" role="tab" aria-controls="match" aria-selected="false">
+                    <i class="far fa-calendar-alt"></i>
+                </a>
+            </li>     
+            {% if app.user ==  team.getLeader() %}   
+                <li class="nav-item ">
+                    <a class="nav-link text-light bg-secondary" id="invitation-tab" data-toggle="tab" href="#invitation" role="tab" aria-controls="invitation" aria-selected="false">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </a>
+                </li>
+
+                <div class="navbar-nav ml-auto">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-cogs" aria-hidden="true"></i> Team Management
+                    </button>
+                    <div class="dropdown-menu bg-secondary text-light" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item text-light" href="{{path('team_edit',{'slug':team.slug})}}"> 
+                            <i class="fa fa-cog" aria-hidden="true"></i> &nbsp; 
+                            Modifier les informations
+                        </a>  
+                        <a class="dropdown-item text-light" href="{{path('team_invitation',{'slug':team.slug})}}">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; 
+                            Inviter nouveau membre
+                        </a>
+                        <a class="dropdown-item text-light" href="{{path('team_delete',{'slug':team.slug})}}">
+                            <i class="fa fa-trash" aria-hidden="true"></i> &nbsp; 
+                            Supprimer l'équipe
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </ul>
+
+        <hr color="orange" class="my-1" style="height:2px">
+        
+        <div class=" tab-content" id="myTabContent">
+
+            <!-- Onglet - Member -->
+            <div class="tab-pane fade show active " id="member" role="tabpanel" aria-labelledby="member-tab">  
+                <h5>Membres</h5>
+                <div class="row">
+                    {% for membership in team.memberships %} 
+                        <div class=" col-6 col-md-3  text-center">  
+                            {# Leader Action - Remove Member #}
+                            {% if app.user ==  team.getLeader() and membership.teamRole.title == 'Member' %}
+                            <div class="hero__content text-light container-fluid container--max-width " >                            
+                                <a href="{{path('membership_remove',{'id' : membership.id})}}" class="btn btn-danger m-2 float-right text-light ">
+                                <i class="fas fa-trash"></i></a>
+                            </div>        
+                            {% endif %}                        
+                            <div class="card-body  card bg-light m-1">
+                                <img class="avatar-medium" src="{{membership.member.picture}}" 
+                                alt="" style="height: 200px; width: 100%; display: block">   
+                                <a class="text-warning font-weight-bold" href="{{path('user_show',{'userName' : membership.member.userName})}}">
+                                    {{membership.member.userName}}
+                                </a>
+                                {{membership.teamRole.title}}
+                            </div>
+                        </div>                        
+                    {% endfor %}
+                </div>                        
+            </div>
+
+            <!-- Onglet - Tournament -->
+            <div class="tab-pane fade px-2" id="tournament" role="tabpanel" aria-labelledby="tournament-tab">                  
+                {% include 'tournament/_tournoi.html.twig'  with {'variable':team.participations, 'var2' : 0 } %}   
+            </div>
+
+            <!-- Onglet - Matchs -->
+            <div class="tab-pane fade px-2" id="match" role="tabpanel" aria-labelledby="match-tab">        
+                {% for match in matchs %}       
+                    {% include 'tournament/_show/_planning_phase.html.twig' with  {'phaseTitle': 'Phase 1', 'phaseNumber' :  1} %}     
+                {% endfor %}  
+            </div>
+
+            <!-- Onglet - Invitation -->
+            <div class="tab-pane fade" id="invitation" role="tabpanel" aria-labelledby="invitation-tab">        
+                <h2>Demande pour rejoindre l'équipe</h2>        
+                {% include 'application/_teamInvitations.html.twig' with  {'var': team.teamInvitations, 'application':1} %}     
+                <h2>Invitations aux tournois</h2>
+                {% include 'application/_tournamentApplication.html.twig' with  {'var': team.tournamentApplications, 'application':0} %}   
+            </div>
+
+        </div>     
+        <hr color="orange" style="height:2px">    
+    </div> 
+{% endblock %}
+

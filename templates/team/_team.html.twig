@@ -1,0 +1,15 @@
+{% if team.isActive == 1 %}
+
+<div class=" col-md-4 p-3 mb-3">
+    <div class="card bg-light text-center p-0"> 
+        <div class="card-body ">
+            <img src= '{{team.logo}}' alt="Image de l'appartement" style="height: 200px; width: 100%; display: block">            
+            <h5 class="card-title">
+                <a href="{{path('team_show',{'slug':team.slug})}}" >{{team.name}} </a>
+            </h5>        
+        </div>
+    </div>
+</div>     
+{% else %}
+
+{% endif %}

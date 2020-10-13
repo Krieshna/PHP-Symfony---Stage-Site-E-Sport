@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guilde Agora| Créer une nouveau tournoi {% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
+{% endblock %}
+
+{% block video %}
+   {{ include('_partials/_banner-esport.html.twig') }}    
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Modification du tournoi {{tournoi.name}} </h4>
+
+    {{form_start(form)}}
+
+        <div class="alert alert-light">
+             {{form_row(form.name)}}
+             {{form_row(form.description)}}
+            <div class="row">
+                <div class="col">                
+                    {{form_row(form.startDate)}}
+                </div>
+                <div class="col">        
+                    {{form_row(form.endDate)}}
+                </div>
+            </div>        
+            <div class="row">   
+                <div class="col">        
+                    {{form_row(form.league)}}
+                </div>
+                <div class="col">        
+                    {{form_row(form.state)}}
+                </div>
+            </div>        
+    <button type="submit" class="btn btn-success ">Confirmez la modification</button>
+    {{form_end(form)}}
+
+        </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" 
+    integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
+
+    <script>      
+        $(document).ready(function(){            
+            $('#tournament_startDate, #tournament_endDate').datepicker({
+                 format: 'dd/mm/yyyy',
+                         startDate: new Date()
+            });
+            $('#booking_startDate, #booking_endDate').on('change', calculateAmount);
+        })
+    </script>
+{% endblock %}

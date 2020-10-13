@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} S'enregistrer
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container mt-4">
+    <h1>Enregistrez vous !</h1>   
+    {{form_start(form)}}
+    {{form_widget(form)}}
+    <button type="submit" class="btn btn-success">Confirmez l'enregistrement</button>
+    {{form_end(form)}}          
+</div>
+
+{% endblock %}

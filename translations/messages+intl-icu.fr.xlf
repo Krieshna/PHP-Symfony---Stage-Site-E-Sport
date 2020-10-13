@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="_site.title">           
+                <source>site.title</source>
+                <target>Agora Blog FR</target>
+            </trans-unit>
+            <trans-unit id="_menu.choose_language">           
+                <source>menu.choose_language</source>
+                <target>Langue </target>
+            </trans-unit>
+
+
+
+
+	
+
+        </body>
+    </file>
+</xliff>

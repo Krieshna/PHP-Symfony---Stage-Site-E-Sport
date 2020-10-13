@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guilde Agora| {{tournoi.name}} {% endblock %}
+
+
+{% block video %}
+   {{ include('_partials/_banner-esport.html.twig') }}    
+{% endblock %}
+
+{% block body %}
+
+<section id="news">
+    <div class="container-fluid" >
+        <div class="component " rel="scrollmonitor-anchor-block">
+
+            <header class="container-fluid component-header text-center container--max-width">
+                <!-- Badge Rappel -->
+                <div class="container">                    
+                    <div class="row">    
+                       <span class="badge badge-danger align-middle my-auto  mr-2  ml-auto"> {{ tournoi.participants|length }} /16 </span>
+                        <span class="badge badge-danger align-middle my-auto  mr-2 "> {{tournoi.state.title}} </span>
+                        <span class="badge badge-danger align-middle my-auto  mr-2 "> {{tournoi.season.year}} </span>
+                        <span class="badge badge-danger align-middle my-auto mr-2"> {{tournoi.league.title}} </span> <br>        
+                    </div>        
+                </div> 
+                  
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-7">
+                        <!-- Titre Challenge -->
+                        <h2 class="mb-0">{{tournoi.name}}</h2>
+                        <!-- Menu Tabulation -->
+                        <ul class="LatestNews__category-ul nav nav-tabs justify-content-center col-12" id="myTab" role="tablist">
+                            <li class="nav-item mx-1">
+                                <a class="nav-link active px-0" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="Home" aria-selected="true">Infos</a>
+                            </li>
+                            <li class="nav-item mx-1">
+                                <a class="nav-link px-0" id="challenger-tab" data-toggle="tab" href="#challenger" role="tab" aria-controls="challenger" aria-selected="false">Participants</a>
+                            </li>
+                            <li class="nav-item mx-1">
+                                <a class="nav-link px-0" id="schedule-tab" data-toggle="tab" href="#schedule" role="tab" aria-controls="schedule" aria-selected="false">Planning</a>
+                            </li>
+                            <li class="nav-item mx-1">
+                                <a class="nav-link px-0" id="knockout-tab" data-toggle="tab" href="#knockout" role="tab" aria-controls="contact" aria-selected="false">Finale</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>              
+
+            </header>
+
+            <div class="container-fluid container--max-width">
+                <div class="container tab-content" id="myTabContent">  
+                    <!-- Tabulation - A Propos -->
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        {{ include('tournament/_show/_infos.html.twig') }}                           
+                    </div>
+                    <!-- Tabulation - Participants -->
+                    <div class="tab-pane fade" id="challenger" role="tabpanel" aria-labelledby="challenger-tab">                       
+                        <h3 class="author-name">Participants</h3>
+                        {# Affichage des équipes #}
+                        <div class="row">
+                            {% for participant in tournoi.participants |sort((a, b) => a.team.name <=> b.team.name) %}
+                                {% include 'team/_team.html.twig' with {'team':participant.team} %}
+                            {% endfor %}
+                        </div>   
+                    </div>
+                    <!-- Tabulation - Planning -->
+                    <div class="tab-pane fade" id="schedule" role="tabpanel" aria-labelledby="schedule-tab">
+                        {% for i in 1..4 %}
+                            {%  for match in tournoi.matchs  if match.phase == i and match.team1 == true and match.team2 == true %}      
+                                {% if loop.first %} <br> <strong> Phase {{i}} </strong>{% endif %}
+                                {% include 'tournament/_show/_planning_phase.html.twig' with  {'match': match} %}     
+                            {% endfor %}
+                        {% endfor %}  
+                    </div>     
+                    <!-- Tabulation - Final -->
+                    <div class="tab-pane fade" id="knockout" role="tabpanel" aria-labelledby="knockout-tab">      
+                       <h3 class="author-name">Finale</h3>
+                        <div class="row">
+                            {# TOP 16 #}
+                            {% include 'tournament/_show/_knockout_phase.html.twig' with  {'phaseTitle': 'Top 16', 'phaseNumber' :  1 } %} 
+
+                            {# TOP 8 #}
+                            {% include 'tournament/_show/_knockout_phase.html.twig' with  {'phaseTitle': 'Top 8', 'phaseNumber' :  2 } %} 
+
+                            {# Demi-Finale #}
+                            {% include 'tournament/_show/_knockout_phase.html.twig' with  {'phaseTitle': 'Top 4', 'phaseNumber' :  3 } %}    
+
+                            {# Finale #}      
+                            {% include 'tournament/_show/_knockout_phase.html.twig' with  {'phaseTitle': 'Top 2', 'phaseNumber' :  4 } %} 
+                        </div>
+                    </div>        
+                </div>               
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

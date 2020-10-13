@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guilde Agora| Date {% endblock %}
+
+{% block video %}
+   {{ include('_partials/_banner-esport.html.twig') }}    
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4 text-center">
+    <h1>Modifier la date de la rencontre 
+    entre {{match.team1.team.name}} et {{match.team1.team.name}} </h4>
+
+    {{form_start(form)}}
+
+    <div class="row">
+        <div class="col-6">
+            <div class="row text-center">       
+                <div class="col-6 col-md ">
+                    {{form_row(form.startDate.date.day)}}
+                </div>
+                <div class="col-6 col-md">
+                    {{form_row(form.startDate.date.month)}}
+                </div>
+                <div class="col-md">
+                    {{form_row(form.startDate.date.year)}}
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row text-center">       
+                <div class="col-6 col-md">
+                    {{form_row(form.startDate.time.hour)}}
+                </div>
+                <div class="col-6 col-md">
+                    {{form_row(form.startDate.time.minute)}}
+                </div>            
+            </div>  
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-success">Confirmez les modifications</button>
+    {{form_end(form)}}
+</div>
+
+{% endblock %}

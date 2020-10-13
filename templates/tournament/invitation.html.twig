@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Guilde Agora| Invitation{% endblock %}
+
+{% block video %}
+   {{ include('_partials/_banner-esport.html.twig') }}    
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Invitation pour </h4>
+
+    {{form_start(form)}}
+    {{form_widget(form)}}
+    <button type="submit" class="btn btn-success">Valider l'invitation</button>
+    {{form_end(form)}}
+</div>
+
+{% endblock %}

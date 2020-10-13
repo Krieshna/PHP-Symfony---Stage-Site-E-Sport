@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guilde Agora| Score {% endblock %}
+
+{% block video %}
+   {{ include('_partials/_banner-esport.html.twig') }}    
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Enregistrement des scores  : </h4>
+
+    {{form_start(form)}}
+    <div class="row">
+        <div class="col-6">
+            <strong> {{match.team1.team.name}} 
+             [{{match.team1.team.tag | upper}}] 
+             </strong>
+             {{form_row(form.scoreTeam1)}}
+        </div>
+         
+        <div class="col-6">
+            {% if  match.team2 %}
+                <strong> {{match.team2.team.name}} 
+                [{{match.team2.team.tag| upper}}] 
+                </strong>a
+            {% else %}  
+                <strong> No competitor </strong>
+            {% endif %}
+            {{form_row(form.scoreTeam2)}}
+        </div>
+        
+    </div>
+    {{form_widget(form)}}
+    <button type="submit" class="btn btn-success">
+    Confirmez les modifications
+    </button>
+    {{form_end(form)}}
+</div>
+
+{% endblock %}

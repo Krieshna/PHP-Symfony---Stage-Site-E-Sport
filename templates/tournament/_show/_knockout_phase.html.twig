@@ -1,0 +1,55 @@
+<div class="col-md-3">
+    {% for match in tournoi.matchs  if match.phase ==  phaseNumber %}  
+        <div class="knockout phase{{phaseNumber}} border border-dark ">
+            <div class="col-12 bg-primary text-center text-light">
+                <div class="row align-items-center p-0" >  
+                    <div class="col-10 text-center">
+                    {{phaseTitle}} 
+                    </div>
+                    {% if app.user ==  tournoi.creator() %} 
+                    <div class="navbar-nav justify-content-md-center col-2 ml-auto">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu bg-primary text-light" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item bg-primary text-light" href="{{path('match_score',{'id':match.id})}}"> 
+                                <i class="fas fa-star"></i> &nbsp; 
+                                Score
+                            </a>  
+                            <a class="dropdown-item bg-primary text-light" href="{{path('match_date',{'id':match.id})}}">
+                                <i class="far fa-clock"></i>&nbsp; 
+                                Date
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+
+            </div>
+            <div class="row m-1">
+                {%  if match.team1 %}
+                <div class="col-1 col-md-1 d-block  p-0 text-center"> 
+                    <img src="{{match.team1.team.logo}}" class="logo" alt="Logo" >                                
+                </div>
+                <div class="col-8 col-md-10 p-0 ">
+                    <strong> [{{match.team1.team.tag | upper}}] </strong>
+                </div>
+                <div class="col-1 col-md-1 p-0 ">
+                    <strong>{{match.scoreTeam1}}</strong>
+                </div>
+                {% endif %}
+            </div>
+            <div class="row m-1">
+                {%  if match.team2 %}
+                <div class="col-1 col-md-1 d-block  p-0 text-center"> 
+                    <img src="{{match.team2.team.logo}}" class="w-100" alt="Logo" >                                
+                </div>
+                <div class="col-8 col-md-10 p-0 ">
+                    <strong> [{{match.team2.team.tag | upper}}] </strong>
+                </div>
+                <div class="col-1 col-md-1 p-0 ">
+                    <strong>{{match.scoreTeam2}}</strong>
+                </div>
+                {% endif %}
+            </div>
+        </div>  
+    {% endfor %}  
+</div>

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guilde Agora| Modification de {{team.name}} {% endblock %}
+
+{% block video %}
+   {{ include('_partials/_banner-esport.html.twig') }}    
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Modification de l'équipe</h4>
+
+    {{form_start(form)}}
+    {{form_widget(form)}}
+    <button type="submit" class="btn btn-success">Confirmez les modifications</button>
+    {{form_end(form)}}
+</div>
+
+{% endblock %}

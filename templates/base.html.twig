@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="{{asset('build/css/knockout.css')}}">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="/static/styles/owl-font-style.css" rel="stylesheet" class="next-head">
+        <script src="https://kit.fontawesome.com/ba127b9c22.js" crossorigin="anonymous"></script>     
+
+        {% block stylesheets %} {% endblock %}
+    </head>   
+
+    <body id="" class="home page-has-hero ">
+
+        {% include '_partials/_header.html.twig' %}
+
+        {% set _block = block('video') %}
+        <section class="component hero {% if _block is not empty %} hero--image pr {% endif %} ">
+        {% block video %}{% endblock %}
+        </section>
+
+        {% block body %}{% endblock %}
+
+        {% include '_partials/_footer.html.twig' %}
+        
+        {{ encore_entry_script_tags('app') }}            
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        {% block javascripts %} {% endblock %}
+    </body>
+</html>

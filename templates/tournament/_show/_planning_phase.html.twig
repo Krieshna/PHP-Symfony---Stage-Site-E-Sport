@@ -1,0 +1,56 @@
+ 
+
+{# {% for match in tournoi.matchs  if match.phase == phaseNumber and match.team1 == true and match.team2 == true %}   #}
+
+    
+
+    <div class="row my-2 border border-dark rounded">
+        {# Date & Phase #}
+        <div class=" col-md-2 border bg-primary text-light border-dark rounded ">
+            <div class="row justify-content-center">
+                <strong>
+                    {{match.startDate | date("d M Y - H:i", "Europe/Paris")}}
+                </strong>
+            
+            </div>
+            <div class="row justify-content-center">
+                <strong>
+                   Phase {{match.phase}}
+                </strong>      
+            </div>
+        </div>
+        {# End Date & Phase #}
+        <div class="col-md-10 my-auto">
+            <div class="row my-auto">   
+                {# Team 1 #}
+                <div class="col text-center "> 
+                    <div class="row align-middle">                
+                        <div class="col-1 col-md-2 d-none d-md-block">
+                            <img src="{{match.team1.team.logo}}" class="w-100 " alt="Image d'illustration" > 
+                        </div>
+
+                        <div class="col-10 my-auto">
+                            <strong>{{match.team1.team.name}} [{{match.team1.team.tag | upper}}]  </strong>   
+                            
+                        </div>
+                    </div>                          
+                </div>
+                {# End Team 1 #}
+                <strong class="my-auto">vs</strong>
+                {# Team 2 #}
+                <div class="col text-center "> 
+                    <div class="row align-middle"> 
+                        <div class="col-10 my-auto">
+                            <strong> [{{match.team2.team.tag | upper}}] {{match.team2.team.name}} </strong>                         
+                        </div>
+                        <div class="col-1 col-md-2 d-none d-md-block">
+                            <img src="{{match.team2.team.logo}}" class="w-100 " alt="Image d'illustration" > 
+                        </div>
+                    </div>                          
+                </div>
+                {# End Team 2 #}
+            </div> 
+        </div>
+    </div>
+ 
+{# {% endfor %} #}
